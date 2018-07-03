@@ -1,0 +1,26 @@
+{
+    "name": "infiniityr/alfresco-php-api",
+    "authors": [
+        {
+            "name": "infiniityr",
+            "email": "valentin.lecompte@gmail.com"
+        }
+    ],
+    "require": {
+        "evenement/evenement": "^3.0",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "autoload": {
+        "classmap": [
+            "src"
+        ],
+        "psr-4": {
+            "AlfPHPApi\\": "src/",
+            "AlfPHPApi\\AlfrescoCoreRestApi\\": "src/alfresco-core-rest-api/src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7",
+        "codedungeon/phpunit-result-printer": "^0.16.1"
+    }
+}

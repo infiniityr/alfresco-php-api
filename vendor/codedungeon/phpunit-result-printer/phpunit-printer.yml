@@ -1,0 +1,10 @@
+options:
+  cd-printer-hide-class: false
+  cd-printer-simple-output: false
+  cd-printer-show-config: true
+markers:
+  cd-pass: "✓"
+  cd-fail: "✖"
+  cd-error: "⚈"
+  cd-skipped: "→"
+  cd-incomplete: "∅"
