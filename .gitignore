@@ -1,4 +1,4 @@
 .idea
 composer.lock
 alfresco-php-api.iml
-
+vendor
