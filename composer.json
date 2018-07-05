@@ -16,7 +16,14 @@
         ],
         "psr-4": {
             "AlfPHPApi\\": "src/",
-            "AlfPHPApi\\AlfrescoCoreRestApi\\": "src/alfresco-core-rest-api/src/"
+            "AlfPHPApi\\AlfrescoCoreRestApi\\": "src/alfresco-core-rest-api/src/",
+            "AlfPHPApi\\AlfrescoActivitiRestApi\\": "src/alfresco-activiti-rest-api/src/",
+            "AlfPHPApi\\AlfrescoAuthRestApi\\": "src/alfresco-auth-rest-api/src/",
+            "AlfPHPApi\\AlfrescoDiscoveryRestApi\\": "src/alfresco-discovery-rest-api/src/",
+            "AlfPHPApi\\AlfrescoGsClassificationRestApi\\": "src/alfresco-gs-classification-rest-api/src/",
+            "AlfPHPApi\\AlfrescoGsCoreRestApi\\": "src/alfresco-gs-core-rest-api/src/",
+            "AlfPHPApi\\AlfrescoPrivateRestApi\\": "src/alfresco-private-rest-api/src/",
+            "AlfPHPApi\\AlfrescoSearchRestApi\\": "src/alfresco-search-rest-api/src/"
         }
     },
     "require-dev": {
