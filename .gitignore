@@ -2,3 +2,4 @@
 composer.lock
 alfresco-php-api.iml
 vendor
+**/.DS_Store
