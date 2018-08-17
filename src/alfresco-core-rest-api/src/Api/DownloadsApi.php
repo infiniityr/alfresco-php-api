@@ -62,7 +62,7 @@ class DownloadsApi
             '/downloads/{downloadId}', 'DELETE',
             $pathParams, $queryParams, $headerParams, $formParams, $postBody,
             $authNames, $contentTypes, $accepts, $returnType
-        );
+        )->then($callback);
     }
 
     /**
@@ -98,7 +98,7 @@ class DownloadsApi
             '/downloads', 'POST',
             $pathParams, $queryParams, $headerParams, $formParams, $postBody,
             $authNames, $contentTypes, $accepts, $returnType
-        );
+        )->then($callback);
     }
 
     /**
@@ -136,6 +136,6 @@ class DownloadsApi
             '/downloads/{downloadId}', 'GET',
             $pathParams, $queryParams, $headerParams, $formParams, $postBody,
             $authNames, $contentTypes, $accepts, $returnType
-        );
+        )->then($callback);
     }
 }

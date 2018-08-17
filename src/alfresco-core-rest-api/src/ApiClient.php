@@ -11,6 +11,7 @@ namespace AlfPHPApi\AlfrescoCoreRestApi;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Promise;
+use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
@@ -388,10 +389,10 @@ class ApiClient
         } elseif ($contentType === 'multipart/form-data') {
             $_form_params = $this->normalizeParams($formParams);
             foreach ($_form_params as $key => $val) {
-                if ($this->isFileParam($val)) {
+                if ($this->isFileParam($val) and $val instanceof \SplFileObject) {
                     $options['multipart'][] = [
-                        'name' => $key,
-                        'contents' => $val
+                        'name' => $val->getFilename(),
+                        'contents' => $val->fread($val->getSize())
                     ];
                 } else {
                     $options['multipart'][] = [
@@ -401,7 +402,7 @@ class ApiClient
                 }
             }
         } elseif ($this->isJsonMime($contentType)) {
-            $options['json'] = json_encode($bodyParam);
+            $options['body'] = json_encode($bodyParam);
         } elseif (!empty($bodyParam)) {
             $options['body'] = $bodyParam;
         }
@@ -412,10 +413,9 @@ class ApiClient
         return (new Client())->sendAsync($request, $options)->then(function (ResponseInterface $response) use ($returnType) {
             return $this->deserialize($response, $returnType);
         }, function (RequestException $failure) {
-            return $failure;
+            throw $failure;
         });
     }
-
 
     /**
      * Parses an ISO-8601 string representation of a date value.

@@ -19,4 +19,11 @@
             <directory suffix=".php">./src</directory>
         </whitelist>
     </filter>
+    <php>
+        <env name="ALFRESCO_BASE_URL" value="https://api-explorer.alfresco.com"/>
+        <env name="ALFRESCO_USERNAME" value="admin"/>
+        <env name="ALFRESCO_PASSWORD" value="admin"/>
+        <env name="ACTIVITI_BASE_URL" value="localhost:8080"/>
+        <env name="OAUTH2_BASEURL" value="localhost:8080"/>
+    </php>
 </phpunit>

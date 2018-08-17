@@ -8,6 +8,7 @@
 namespace AlfPHPApi\AlfrescoCoreRestApi\Api;
 
 use AlfPHPApi\AlfrescoCoreRestApi\ApiClient;
+use AlfPHPApi\AlfrescoCoreRestApi\Model\AssocTargetBody;
 use AlfPHPApi\AlfrescoCoreRestApi\Model\NodeAssocPaging;
 
 class AssociationsApi
