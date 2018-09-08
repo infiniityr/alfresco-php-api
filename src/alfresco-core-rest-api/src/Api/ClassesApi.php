@@ -42,6 +42,7 @@ class ClassesApi
         if (empty($className)) {
             throw new \InvalidArgumentException("Missing the required parameter 'className' when calling getClass");
         }
+        $opts = array_merge([], $opts);
         $postBody = null;
         $pathParams = [
             'className' => $className,

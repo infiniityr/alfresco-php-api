@@ -9,7 +9,7 @@ namespace AlfPHPApi\AlfrescoSearchRestApi\Model;
 
 use AlfPHPApi\AlfrescoCoreRestApi\ApiClient;
 
-class Model
+class Model implements \JsonSerializable
 {
     protected static $constructProperties;
 
@@ -19,7 +19,7 @@ class Model
      *
      * @param array $data
      * @param static|null $obj
-     * @return Model|null
+     * @return static|null
      */
     public static function constructFromArray(array $data, $obj = null) {
         if (!empty($data)) {
@@ -31,5 +31,16 @@ class Model
             }
         }
         return $obj;
+    }
+
+    public function jsonSerialize()
+    {
+        $arrayObj = [];
+        foreach (static::$constructProperties as $property => $type) {
+            if (!empty($this->$property)) {
+                $arrayObj[$property] = $this->$property;
+            }
+        }
+        return $arrayObj;
     }
 }

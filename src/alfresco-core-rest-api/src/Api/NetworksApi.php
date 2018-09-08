@@ -46,6 +46,7 @@ class NetworksApi
             throw new \InvalidArgumentException("Missing the required parameter 'networkId' when calling getNetwork");
         }
 
+        $opts = array_merge(['fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'networkId' => $networkId,
@@ -87,6 +88,7 @@ class NetworksApi
             throw new \InvalidArgumentException("Missing the required parameter 'networkId' when calling getNetworkForPerson");
         }
 
+        $opts = array_merge(['fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId'  => $personId,
@@ -125,6 +127,9 @@ class NetworksApi
             throw new \InvalidArgumentException("Missing the required parameter 'personId' when calling listNetworksForPerson");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId' => $personId,

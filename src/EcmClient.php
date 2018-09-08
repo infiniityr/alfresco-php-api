@@ -27,6 +27,7 @@ class EcmClient extends AlfrescoApiClient
         $this->config = $config;
         $this->servicePath = $servicePath;
         $this->changeHost();
+        self::$instance = $this;
     }
 
     public function changeHost() {

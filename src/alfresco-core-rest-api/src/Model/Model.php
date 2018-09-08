@@ -37,7 +37,9 @@ class Model implements \JsonSerializable
     {
         $arrayObj = [];
         foreach (static::$constructProperties as $property => $type) {
-            $arrayObj[$property] = $this->$property;
+            if (!empty($this->$property)) {
+                $arrayObj[$property] = $this->$property;
+            }
         }
         return $arrayObj;
     }

@@ -210,15 +210,20 @@ class PeopleApi
             throw new \InvalidArgumentException("Missing the required parameter 'personId' when calling getActivities");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'who' => '',
+                             'siteId' => '',
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId' => $personId
         ];
         $queryParams = [
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
-            'who' => $opts['who']?:'',
-            'siteId' => $opts['siteId']?:'',
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
+            'who' => $opts['who'],
+            'siteId' => $opts['siteId'],
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
         ];
         $headerParams = [];
@@ -254,6 +259,7 @@ class PeopleApi
             throw new \InvalidArgumentException("Missing the required parameter 'favoriteId' when calling getFavorite");
         }
 
+        $opts = array_merge(['fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId' => $personId,
@@ -295,6 +301,7 @@ class PeopleApi
             throw new \InvalidArgumentException("Missing the required parameter 'siteId' when calling getFavoriteSite");
         }
 
+        $opts = array_merge(['fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId' => $personId,
@@ -332,13 +339,16 @@ class PeopleApi
             throw new \InvalidArgumentException("Missing the required parameter 'personId' when calling getFavoriteSites");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId' => $personId
         ];
         $queryParams = [
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
         ];
         $headerParams = [];
@@ -370,14 +380,18 @@ class PeopleApi
             throw new \InvalidArgumentException("Missing the required parameter 'personId' when calling getFavorites");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'where' => '',
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId' => $personId
         ];
         $queryParams = [
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
-            'where' => $opts['where']?:'',
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
+            'where' => $opts['where'],
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
         ];
         $headerParams = [];
@@ -409,6 +423,7 @@ class PeopleApi
             throw new \InvalidArgumentException("Missing the required parameter 'personId' when calling getPerson");
         }
 
+        $opts = array_merge(['fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId' => $personId
@@ -440,12 +455,16 @@ class PeopleApi
      */
     public function getPersons(array $opts = [])
     {
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'where' => '',
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [];
         $queryParams = [
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
-            'where' => $opts['where']?:'',
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
+            'where' => $opts['where'],
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
         ];
         $headerParams = [];
@@ -512,6 +531,7 @@ class PeopleApi
             throw new \InvalidArgumentException("Missing the required parameter 'networkId' when calling getPersonNetwork");
         }
 
+        $opts = array_merge(['fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId' => $personId,
@@ -549,13 +569,16 @@ class PeopleApi
             throw new \InvalidArgumentException("Missing the required parameter 'personId' when calling getPersonNetworks");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId' => $personId
         ];
         $queryParams = [
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
         ];
         $headerParams = [];
@@ -591,6 +614,7 @@ class PeopleApi
             throw new \InvalidArgumentException("Missing the required parameter 'preferenceName' when calling getPreference");
         }
 
+        $opts = array_merge(['fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId' => $personId,
@@ -628,13 +652,16 @@ class PeopleApi
             throw new \InvalidArgumentException("Missing the required parameter 'personId' when calling getPreferences");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId' => $personId
         ];
         $queryParams = [
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
         ];
         $headerParams = [];
@@ -666,14 +693,19 @@ class PeopleApi
             throw new \InvalidArgumentException("Missing the required parameter 'personId' when calling getSiteMembership");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'orderBy' => '',
+                             'relations' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId' => $personId
         ];
         $queryParams = [
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
-            'orderBy' => $opts['orderBy']?:'',
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
+            'orderBy' => $opts['orderBy'],
             'relations' => $this->apiClient->buildCollectionParam($opts['relations'], 'csv'),
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
         ];
@@ -706,17 +738,23 @@ class PeopleApi
             throw new \InvalidArgumentException("Missing the required parameter 'personId' when calling getGroupsMembership");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'orderBy' => '',
+                             'where' => '',
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId' => $personId
         ];
         $queryParams = [
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
-            'orderBy' => $opts['orderBy']?:'',
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
+            'orderBy' => $opts['orderBy'],
             'include' => $this->apiClient->buildCollectionParam($opts['include'], 'csv'),
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
-            'where' => $opts['where']?:''
+            'where' => $opts['where']
         ];
         $headerParams = [];
         $formParams = [];
@@ -751,6 +789,7 @@ class PeopleApi
             throw new \InvalidArgumentException("Missing the required parameter 'siteId' when calling getSiteMembershipRequest");
         }
 
+        $opts = array_merge(['fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId' => $personId,
@@ -788,13 +827,16 @@ class PeopleApi
             throw new \InvalidArgumentException("Missing the required parameter 'personId' when calling getSiteMembershipRequests");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId' => $personId
         ];
         $queryParams = [
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
         ];
         $headerParams = [];

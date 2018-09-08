@@ -77,6 +77,11 @@ class AssociationsApi
      * @throws \Exception
      */
     public function listSourceNodeAssociations(string $targetId, array $opts=[]){
+        $opts = array_merge([
+            'where' => '',
+            'include' => '',
+            'fields' => []
+        ], $opts);
         if (empty($targetId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'targetId' when calling listSourceNodeAssociations");
         }
@@ -85,8 +90,8 @@ class AssociationsApi
             'targetId' => $targetId,
         ];
         $queryParams = [
-            'where' => $opts['where'] ?: '',
-            'include'    => $opts['include'] ?: '',
+            'where' => $opts['where'],
+            'include'    => $opts['include'],
             'fields'     => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
         ];
         $headerParams = [];
@@ -115,6 +120,11 @@ class AssociationsApi
      * @throws \Exception
      */
     public function listTargetAssociations(string $sourceId, array $opts=[]){
+        $opts = array_merge([
+            'where' => '',
+            'include' => '',
+            'fields' => []
+        ], $opts);
         if (empty($sourceId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'sourceId' when calling listTargetAssociations");
         }
@@ -124,8 +134,8 @@ class AssociationsApi
             'sourceId' => $sourceId,
         ];
         $queryParams = [
-            'where' => $opts['where'] ?: '',
-            'include'    => $opts['include'] ?: '',
+            'where' => $opts['where'],
+            'include'    => $opts['include'],
             'fields'     => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
         ];
         $headerParams = [];
@@ -155,6 +165,9 @@ class AssociationsApi
      * @throws \Exception
      */
     public function removeAssoc(string $sourceId, string $targetId, array $opts=[]){
+        $opts = array_merge([
+            'assocType' => ''
+        ], $opts);
         if (empty($sourceId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'sourceId' when calling removeAssoc");
         }
@@ -168,7 +181,7 @@ class AssociationsApi
             'targetId' => $targetId,
         ];
         $queryParams = [
-            'assocType' => $opts['assocType'] ?: '',
+            'assocType' => $opts['assocType'],
         ];
         $headerParams = [];
         $formParams = [];

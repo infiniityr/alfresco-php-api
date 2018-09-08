@@ -30,6 +30,12 @@ class AuthenticationApi
         $this->apiClient = $apiClient?:ApiClient::$instance;
     }
 
+    /**
+     * @param LoginRequest $loginRequest
+     *
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \Exception
+     */
     public function createTicket(LoginRequest $loginRequest)
     {
         if (empty($loginRequest)) {
@@ -53,6 +59,10 @@ class AuthenticationApi
         );
     }
 
+    /**
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \Exception
+     */
     public function deleteTicket()
     {
         $postBody = null;
@@ -72,6 +82,10 @@ class AuthenticationApi
         );
     }
 
+    /**
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @throws \Exception
+     */
     public function validateTicket()
     {
         $postBody = null;

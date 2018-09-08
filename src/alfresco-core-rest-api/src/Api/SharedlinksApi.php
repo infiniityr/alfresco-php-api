@@ -45,6 +45,8 @@ class SharedlinksApi
             throw new \InvalidArgumentException("Missing the required parameter 'sharedLinkBody' when calling addSharedBody");
         }
 
+        $opts = array_merge(['include' => [],
+                             'fields' => []], $opts);
         $postBody = $sharedLinkBody;
         $pathParams = [];
         $queryParams = [
@@ -142,6 +144,11 @@ class SharedlinksApi
      */
     public function findSharedLinks(array $opts = [])
     {
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'where' => '',
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [];
         $queryParams = [
@@ -180,6 +187,8 @@ class SharedlinksApi
             throw new \InvalidArgumentException("Missing the required parameter 'sharedId' when calling getSharedLink");
         }
 
+        $opts = array_merge(['include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'sharedId' => $sharedId
@@ -217,12 +226,14 @@ class SharedlinksApi
             throw new \InvalidArgumentException("Missing the required parameter 'sharedId' when calling getSharedLinkContent");
         }
 
+        $opts = array_merge(['attachment' => false,
+                             'ifModifiedSince' => ''], $opts);
         $postBody = null;
         $pathParams = [
             'sharedId' => $sharedId
         ];
         $queryParams = [
-            'attachment' => isset($opts['attachment'])?$opts['attachment']:true
+            'attachment' => $opts['attachment']
         ];
         $headerParams = [
             'If-Modified-Since' => $opts['ifModifiedSince']

@@ -9,7 +9,10 @@
 namespace AlfPHPApi;
 
 
-class BaseListApi
+use AlfPHPApi\AlfrescoCoreRestApi\Api\SiteApi;
+use AlfPHPApi\AlfrescoCoreRestApi\ApiClient;
+
+abstract class BaseListApi
 {
     public static $toLoad = [];
 
@@ -17,21 +20,21 @@ class BaseListApi
 
     protected static $methods = [];
 
-    public function __construct() {
-        static::instantiateObjects();
+    public function __construct(ApiClient $client) {
+        static::instantiateObjects($client);
     }
 
-    public static function instantiateObjects() {
+    public static function instantiateObjects(ApiClient $client) {
         foreach (static::$toLoad as $class) {
             $classReflexion = new \ReflectionClass($class);
-            static::$instances[lcfirst($classReflexion->getShortName())] = new $class();
+            static::$instances[lcfirst($classReflexion->getShortName())] = new $class($client);
         }
     }
 
     public function __call($name, $arguments) {
         foreach (static::$instances as $instance) {
             if (method_exists($instance, $name)) {
-                $instance->$name(...$arguments);
+                return $instance->$name(...$arguments);
             }
         }
         throw new \BadMethodCallException("The method $name doesn't exists in API classes from " . static::class);

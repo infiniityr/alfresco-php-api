@@ -123,6 +123,8 @@ class RenditionsApi
             throw new \InvalidArgumentException("Missing the required parameter 'renditionId' when calling getRenditionContent");
         }
 
+        $opts = array_merge(['attachment' => false,
+                             'ifModifiedSince' => ''], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -199,13 +201,15 @@ class RenditionsApi
             throw new \InvalidArgumentException("Missing the required parameter 'renditionId' when calling getSharedLinkRenditionContent");
         }
 
+        $opts = array_merge(['attachment' => false,
+                             'ifModifiedSince' => []], $opts);
         $postBody = null;
         $pathParams = [
             'sharedId' => $sharedId,
             'renditionId' => $renditionId
         ];
         $queryParams = [
-            'attachment' => isset($opts['attachment'])?$opts['attachment']:true
+            'attachment' => $opts['attachment']
         ];
         $headerParams = [
             'If-Modified-Since' => $opts['ifModifiedSince']

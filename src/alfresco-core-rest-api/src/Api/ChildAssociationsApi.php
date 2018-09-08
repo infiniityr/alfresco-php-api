@@ -53,12 +53,15 @@ class ChildAssociationsApi
         if (empty($nodeBody)) {
             throw new \InvalidArgumentException("Missing the required parameter 'nodeBody' when calling addNode");
         }
+        $opts = array_merge(['autoRename' => false,
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = $nodeBody;
         $pathParams = [
             'nodeId' => $nodeId,
         ];
         $queryParams = [
-            'autoRename' => $opts['autoRename'] ?: false,
+            'autoRename' => $opts['autoRename'],
             'include'    => $this->apiClient->buildCollectionParam($opts['include'], 'csv'),
             'fields'     => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
         ];
@@ -128,12 +131,13 @@ class ChildAssociationsApi
         if (empty($nodeId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling deleteNode");
         }
+        $opts = array_merge(['permanent' => false], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
         ];
         $queryParams = [
-            'permanent' => $opts['permanent'] ?: false
+            'permanent' => $opts['permanent']
         ];
         $headerParams = [];
         $formParams = [];
@@ -164,19 +168,27 @@ class ChildAssociationsApi
         if (empty($nodeId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling getNodeChildren");
         }
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'orderBy' => 'ASC',
+                             'where' => '',
+                             'include' => [],
+                             'relativePath' => '',
+                             'includeSource' => false,
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
         ];
         $queryParams = [
-        'skipCount'     => $opts['skipCount'] ?: 0,
-        'maxItems'      => $opts['maxItems'] ?: 100,
-        'orderBy'       => $opts['orderBy'] ?: 'ASC',
-        'where'         => $opts['where'] ?: '',
-        'include'       => $this->apiClient->buildCollectionParam($opts['include'], 'csv'),
-        'fields'        => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
-        'relativePath'  => $opts['relativePath'] ?: '',
-        'includeSource' => $opts['includeSource'] ?: false,
+            'skipCount'     => $opts['skipCount'],
+            'maxItems'      => $opts['maxItems'],
+            'orderBy'       => $opts['orderBy'],
+            'where'         => $opts['where'],
+            'include'       => $this->apiClient->buildCollectionParam($opts['include'], 'csv'),
+            'fields'        => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
+            'relativePath'  => $opts['relativePath'],
+            'includeSource' => $opts['includeSource'],
         ];
         $headerParams = [];
         $formParams = [];
@@ -207,13 +219,16 @@ class ChildAssociationsApi
         if (empty($childId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'childId' when calling listParents");
         }
+        $opts = array_merge(['where' => '',
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'childId' => $childId,
         ];
         $queryParams = [
-            'where'         => $opts['where'] ?: '',
-            'include'       => $opts['include'] ?: '',
+            'where'         => $opts['where'],
+            'include'       => $opts['include'],
             'fields'        => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
         ];
         $headerParams = [];
@@ -245,14 +260,18 @@ class ChildAssociationsApi
         if (empty($parentId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'parentId' when calling listSecondaryChildAssociations");
         }
+        $opts = array_merge(['assocType' => '',
+                             'where' => '',
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'parentId' => $parentId,
         ];
         $queryParams = [
-            'assocType'     => $opts['assocType'] ?: '',
-            'where'         => $opts['where'] ?: '',
-            'include'       => $opts['include'] ?: '',
+            'assocType'     => $opts['assocType'],
+            'where'         => $opts['where'],
+            'include'       => $opts['include'],
             'fields'        => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
         ];
         $headerParams = [];
@@ -288,6 +307,8 @@ class ChildAssociationsApi
         if (empty($moveBody)) {
             throw new \InvalidArgumentException("Missing the required parameter 'moveBody' when calling moveNode");
         }
+        $opts = array_merge(['include' => [],
+                             'fields' => []], $opts);
         $postBody = $moveBody;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -329,13 +350,14 @@ class ChildAssociationsApi
         if (empty($childId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'childId' when calling removeSecondaryChildAssoc");
         }
+        $opts = array_merge(['assocType' => ''], $opts);
         $postBody = null;
         $pathParams = [
             'parentId' => $parentId,
             'childId'  => $childId,
         ];
         $queryParams = [
-            'assocType'     => $opts['assocType'] ?: '',
+            'assocType'     => $opts['assocType'],
         ];
         $headerParams = [];
         $formParams = [];

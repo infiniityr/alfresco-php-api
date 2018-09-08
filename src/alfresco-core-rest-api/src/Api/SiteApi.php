@@ -83,6 +83,10 @@ class SiteApi
      */
     public function createSite(SiteBody $siteBody, array $opts = [])
     {
+        $opts = array_merge([
+            'skipConfiguration' => false,
+            'skipAddToFavorites' => false
+        ], $opts);
         if (empty($siteBody)) {
             throw new \InvalidArgumentException("Missing the required parameter 'siteBody' when calling createSite");
         }
@@ -90,8 +94,8 @@ class SiteApi
         $postBody = $siteBody;
         $pathParams = [];
         $queryParams = [
-            'skipConfiguration' => $opts['skipConfiguration']?:false,
-            'skipAddToFavorites' => $opts['skipAddToFavorites']?:false
+            'skipConfiguration' => $opts['skipConfiguration'],
+            'skipAddToFavorites' => $opts['skipAddToFavorites']
         ];
         $headerParams = [];
         $formParams = [];
@@ -118,6 +122,9 @@ class SiteApi
      */
     public function deleteSite(string $siteId, array $opts = [])
     {
+        $opts = array_merge([
+            'permanent' => false
+        ], $opts);
         if (empty($siteId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'siteId' when calling deleteSite");
         }
@@ -348,12 +355,19 @@ class SiteApi
      */
     public function getSites(array $opts = [])
     {
+        $opts = array_merge([
+            'skipCount' => 0,
+            'maxItems' => 100,
+            'orderBy' => '',
+            'relations' => [],
+            'fields' => []
+        ], $opts);
         $postBody = null;
         $pathParams = [];
         $queryParams = [
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
-            'orderBy' => $opts['orderBy']?:'',
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
+            'orderBy' => $opts['orderBy'],
             'relations' => $this->apiClient->buildCollectionParam($opts['relations'], 'csv'),
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
         ];

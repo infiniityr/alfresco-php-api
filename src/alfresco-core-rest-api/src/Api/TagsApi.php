@@ -84,14 +84,17 @@ class TagsApi
         if (empty($nodeId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling addTag");
         }
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId
         ];
         $queryParams = [
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
-            'fields' => $this->apiClient->buildCollectionParam(key_exists('fields', $opts)?$opts['fields']:null, 'csv')
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
+            'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
         ];
         $headerParams = [];
         $formParams = [];
@@ -123,12 +126,13 @@ class TagsApi
         if (empty($tagId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling addTag");
         }
+        $opts = array_merge(['fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'tagId' => $tagId
         ];
         $queryParams = [
-            'fields' => $this->apiClient->buildCollectionParam(key_exists('fields', $opts)?$opts['fields']:null, 'csv')
+            'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
         ];
         $headerParams = [];
         $formParams = [];
@@ -158,12 +162,15 @@ class TagsApi
      */
     public function getTags(array $opts = [])
     {
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [];
         $queryParams = [
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
-            'fields' => $this->apiClient->buildCollectionParam(key_exists('fields', $opts)?$opts['fields']:null, 'csv')
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
+            'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
         ];
         $headerParams = [];
         $formParams = [];

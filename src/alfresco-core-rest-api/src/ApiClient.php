@@ -231,7 +231,7 @@ class ApiClient
             $auth = $this->authentications[$authName];
             switch ($auth['type']) {
                 case 'basic':
-                    if ($auth['username'] || $auth['password']) {
+                    if (!empty($auth['username']) || !empty($auth['password'])) {
                         $result = [
                             'auth' => [
                                 !empty($auth['username'])?urlencode($auth['username']):'',
@@ -427,7 +427,7 @@ class ApiClient
      *      The parsed date object.
      */
     public static function parseDate ($str) {
-        return \DateTime::createFromFormat(\DateTime::ISO8601, $str);
+        return new \DateTime($str);
     }
 
     /**
@@ -440,7 +440,7 @@ class ApiClient
      *      The parsed date object.
      */
     public static function parseDateTime ($str) {
-        return \DateTime::createFromFormat(\DateTime::ISO8601, $str);
+        return new \DateTime($str);
     }
 
     /**

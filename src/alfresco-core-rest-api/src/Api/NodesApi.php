@@ -57,12 +57,15 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeBody' when calling addFavorite");
         }
 
+        $opts = array_merge(['autoRename' => false,
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = $nodeBody;
         $pathParams = [
             'nodeId' => $nodeId,
         ];
         $queryParams = [
-            'autoRename' => $opts['autoRename'] ?: false,
+            'autoRename' => $opts['autoRename'],
             'include'    => $this->apiClient->buildCollectionParam($opts['include'], 'csv'),
             'fields'     => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
         ];
@@ -100,6 +103,8 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'copyBody' when calling copyNode");
         }
 
+        $opts = array_merge(['include' => [],
+                             'fields' => []], $opts);
         $postBody = $copyBody;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -138,6 +143,7 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling deleteNode");
         }
 
+        $opts = array_merge(['permanent' => false], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -175,6 +181,7 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling getDeletedNode");
         }
 
+        $opts = array_merge(['include' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -207,11 +214,14 @@ class NodesApi
      */
     public function getDeletedNodes(array $opts = [])
     {
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'include' => []], $opts);
         $postBody = null;
         $pathParams = [];
         $queryParams = [
-            'skipCount' => $opts['skipCount'] ?: 0,
-            'maxItems'  => $opts['maxItems'] ?: 100,
+            'skipCount' => $opts['skipCount'],
+            'maxItems'  => $opts['maxItems'],
             'include'   => $this->apiClient->buildCollectionParam($opts['include'], 'csv'),
         ];
         $headerParams = [];
@@ -244,6 +254,8 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling getFileContent");
         }
 
+        $opts = array_merge(['attachment' => false,
+                             'ifModifiedSince' => ''], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -283,6 +295,9 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling getNode");
         }
 
+        $opts = array_merge(['relativePath' => '',
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -322,6 +337,8 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling getNodeContent");
         }
 
+        $opts = array_merge(['attachment' => false,
+                             'ifModifiedSince' => ''], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -361,6 +378,14 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling getNodeChildren");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'orderBy' => '',
+                             'where' => '',
+                             'relativePath' => '',
+                             'includeSource' => '',
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -405,6 +430,12 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling getParents");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'where' => '',
+                             'includeSource' => '',
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -447,6 +478,12 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling getSecondaryChildren");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'where' => '',
+                             'includeSource' => '',
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -489,6 +526,9 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling getSourceAssociations");
         }
 
+        $opts = array_merge(['where' => '',
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -528,6 +568,9 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling getTargetAssociations");
         }
 
+        $opts = array_merge(['where' => '',
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -571,6 +614,8 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeBodyLock' when calling lockNode");
         }
 
+        $opts = array_merge(['include' => [],
+                             'fields' => []], $opts);
         $postBody = $nodeBodyLock;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -609,6 +654,8 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling unlockNode");
         }
 
+        $opts = array_merge(['include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -651,6 +698,8 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'moveBody' when calling moveNode");
         }
 
+        $opts = array_merge(['include' => [],
+                             'fields' => []], $opts);
         $postBody = $moveBody;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -761,13 +810,17 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'contentBody' when calling updateFileContent");
         }
 
+        $opts = array_merge(['majorVersion' => false,
+                             'comment' => '',
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = $contentBody;
         $pathParams = [
             'nodeId' => $nodeId,
         ];
         $queryParams = [
             'majorVersion' => $opts['majorVersion'],
-            'comment'      => $opts['comment'] ?: '',
+            'comment'      => $opts['comment'],
             'include'      => $this->apiClient->buildCollectionParam($opts['include'], 'csv'),
             'fields'       => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
         ];
@@ -802,6 +855,10 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeBody' when calling updateNodeContent");
         }
 
+        $opts = array_merge(['majorVersion' => false,
+                             'comment' => '',
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = $nodeBody;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -846,6 +903,8 @@ class NodesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeBody' when calling updateNode");
         }
 
+        $opts = array_merge(['include' => [],
+                             'fields' => []], $opts);
         $postBody = $nodeBody;
         $pathParams = [
             'nodeId' => $nodeId,

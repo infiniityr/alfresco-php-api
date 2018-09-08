@@ -48,6 +48,7 @@ class RatingsApi
             throw new \InvalidArgumentException("Missing the required parameter 'ratingId' when calling getRating");
         }
 
+        $opts = array_merge(['fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -85,13 +86,16 @@ class RatingsApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling getRatings");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId
         ];
         $queryParams = [
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
         ];
         $headerParams = [];

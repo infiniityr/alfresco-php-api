@@ -9,17 +9,24 @@ namespace AlfPHPApi\AlfrescoCoreRestApi\Api;
 
 
 use AlfPHPApi\AlfrescoCoreRestApi\ApiClient;
+use AlfPHPApi\AlfrescoCoreRestApi\Model\AssocChildBody;
 use AlfPHPApi\AlfrescoCoreRestApi\Model\AssocTargetBody;
+use AlfPHPApi\AlfrescoCoreRestApi\Model\CopyBody;
 use AlfPHPApi\AlfrescoCoreRestApi\Model\DeletedNodeEntry;
 use AlfPHPApi\AlfrescoCoreRestApi\Model\DeletedNodesPaging;
+use AlfPHPApi\AlfrescoCoreRestApi\Model\EmailSharedLinkBody;
 use AlfPHPApi\AlfrescoCoreRestApi\Model\NodeAssocPaging;
+use AlfPHPApi\AlfrescoCoreRestApi\Model\NodeBody;
 use AlfPHPApi\AlfrescoCoreRestApi\Model\NodeChildAssocPaging;
 use AlfPHPApi\AlfrescoCoreRestApi\Model\NodeEntry;
 use AlfPHPApi\AlfrescoCoreRestApi\Model\NodePaging;
 use AlfPHPApi\AlfrescoCoreRestApi\Model\NodeSharedLinkEntry;
 use AlfPHPApi\AlfrescoCoreRestApi\Model\NodeSharedLinkPaging;
+use AlfPHPApi\AlfrescoCoreRestApi\Model\RenditionBody;
 use AlfPHPApi\AlfrescoCoreRestApi\Model\RenditionEntry;
 use AlfPHPApi\AlfrescoCoreRestApi\Model\RenditionPaging;
+use AlfPHPApi\AlfrescoCoreRestApi\Model\SharedLinkBody;
+use AlfPHPApi\AlfrescoCoreRestApi\Model\SiteBody;
 use AlfPHPApi\AlfrescoCoreRestApi\Model\SiteEntry;
 
 class ChangesApi
@@ -89,6 +96,11 @@ class ChangesApi
      */
     public function addNode(string $nodeId, NodeBody $nodeBody, array $opts = [])
     {
+        $opts = array_merge([
+            'autoRename' => false,
+            'include' => [],
+            'fields' => []
+        ], $opts);
         if (empty($nodeId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling addNode");
         }
@@ -101,7 +113,7 @@ class ChangesApi
             'nodeId' => $nodeId,
         ];
         $queryParams = [
-            'autoRename' => $opts['autoRename'] ?: false,
+            'autoRename' => $opts['autoRename'],
             'include'    => $this->apiClient->buildCollectionParam($opts['include'], 'csv'),
             'fields'     => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
         ];
@@ -170,7 +182,10 @@ class ChangesApi
         if (empty($sharedLinkBody)) {
             throw new \InvalidArgumentException("Missing the required parameter 'sharedLinkBody' when calling addSharedBody");
         }
-
+        $opts = array_merge([
+            'include' => [],
+            'fields' => []
+        ], $opts);
         $postBody = $sharedLinkBody;
         $pathParams = [];
         $queryParams = [
@@ -211,7 +226,7 @@ class ChangesApi
         if (empty($copyBody)) {
             throw new \InvalidArgumentException("Missing the required parameter 'copyBody' when calling copyNode");
         }
-
+        $opts = array_merge(['include'=> [], 'fields' => []], $opts);
         $postBody = $copyBody;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -284,6 +299,10 @@ class ChangesApi
      */
     public function createSite(SiteBody $siteBody, array $opts = [])
     {
+        $opts = array_merge([
+            'skipConfiguration' => false,
+            'skipAddToFavorites' => false
+        ], $opts);
         if (empty($siteBody)) {
             throw new \InvalidArgumentException("Missing the required parameter 'siteBody' when calling createSite");
         }
@@ -291,8 +310,8 @@ class ChangesApi
         $postBody = $siteBody;
         $pathParams = [];
         $queryParams = [
-            'skipConfiguration' => $opts['skipConfiguration']?:false,
-            'skipAddToFavorites' => $opts['skipAddToFavorites']?:false
+            'skipConfiguration' => $opts['skipConfiguration'],
+            'skipAddToFavorites' => $opts['skipAddToFavorites']
         ];
         $headerParams = [];
         $formParams = [];
@@ -320,6 +339,9 @@ class ChangesApi
      * @throws \Exception
      */
     public function deleteNode(string $nodeId, array $opts=[]){
+        $opts = array_merge([
+            'permanent' => false
+        ], $opts);
         if (empty($nodeId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling deleteNode");
         }
@@ -328,7 +350,7 @@ class ChangesApi
             'nodeId' => $nodeId,
         ];
         $queryParams = [
-            'permanent' => $opts['permanent'] ?: false
+            'permanent' => $opts['permanent']
         ];
         $headerParams = [];
         $formParams = [];
@@ -393,12 +415,13 @@ class ChangesApi
             throw new \InvalidArgumentException("Missing the required parameter 'siteId' when calling deleteSite");
         }
 
+        $opts = array_merge(['permanent' => false], $opts);
         $postBody = null;
         $pathParams = [
             'siteId' => $siteId
         ];
         $queryParams = [
-            'permanent' => $opts['permanent']?:false
+            'permanent' => $opts['permanent']
         ];
         $headerParams = [];
         $formParams = [];
@@ -460,12 +483,20 @@ class ChangesApi
      */
     public function findSharedLinks(array $opts = [])
     {
+
+        $opts = array_merge([
+            'include'=> [],
+            'fields' => [],
+            'skipCount' => 0,
+            'maxItems' => 100,
+            'where' => ''
+        ], $opts);
         $postBody = null;
         $pathParams = [];
         $queryParams = [
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
-            'where' => $opts['where']?:'',
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
+            'where' => $opts['where'],
             'include' => $this->apiClient->buildCollectionParam($opts['include'], 'csv'),
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
         ];
@@ -500,6 +531,7 @@ class ChangesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling getDeletedNode");
         }
 
+        $opts = array_merge(['include' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -533,11 +565,16 @@ class ChangesApi
      */
     public function getDeletedNodes(array $opts = [])
     {
+        $opts = array_merge([
+            'include'=> [],
+            'maxItems' => 100,
+            'skipCount' => 0
+        ], $opts);
         $postBody = null;
         $pathParams = [];
         $queryParams = [
-            'skipCount' => $opts['skipCount'] ?: 0,
-            'maxItems'  => $opts['maxItems'] ?: 100,
+            'skipCount' => $opts['skipCount'],
+            'maxItems'  => $opts['maxItems'],
             'include'   => $this->apiClient->buildCollectionParam($opts['include'], 'csv'),
         ];
         $headerParams = [];
@@ -571,6 +608,8 @@ class ChangesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling getFileContent");
         }
 
+        $opts = array_merge(['attachment'=> '',
+                             'ifModifiedSince' => ''], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -611,6 +650,9 @@ class ChangesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling getNode");
         }
 
+        $opts = array_merge(['include'=> [],
+                             'relativePath' => '',
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -649,19 +691,27 @@ class ChangesApi
         if (empty($nodeId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling getNodeChildren");
         }
+        $opts = array_merge(['include'=> [],
+                             'skipCount' => 0,
+                             'maxItems' => 100,
+                             'orderBy' => 'ASC',
+                             'where' => '',
+                             'relativePath' => '',
+                             'includeSource' => false,
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
         ];
         $queryParams = [
-            'skipCount'     => $opts['skipCount'] ?: 0,
-            'maxItems'      => $opts['maxItems'] ?: 100,
-            'orderBy'       => $opts['orderBy'] ?: 'ASC',
-            'where'         => $opts['where'] ?: '',
+            'skipCount'     => $opts['skipCount'],
+            'maxItems'      => $opts['maxItems'],
+            'orderBy'       => $opts['orderBy'],
+            'where'         => $opts['where'],
             'include'       => $this->apiClient->buildCollectionParam($opts['include'], 'csv'),
             'fields'        => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
-            'relativePath'  => $opts['relativePath'] ?: '',
-            'includeSource' => $opts['includeSource'] ?: false,
+            'relativePath'  => $opts['relativePath'],
+            'includeSource' => $opts['includeSource'],
         ];
         $headerParams = [];
         $formParams = [];
@@ -736,13 +786,15 @@ class ChangesApi
             throw new \InvalidArgumentException("Missing the required parameter 'renditionId' when calling getRenditionContent");
         }
 
+        $opts = array_merge(['attachment'=> false,
+                             'ifModifiedSince' => ''], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
             'renditionId' => $renditionId
         ];
         $queryParams = [
-            'attachment' => isset($opts['attachment'])?$opts['attachment']:true
+            'attachment' => $opts['attachment']
         ];
         $headerParams = [
             'If-Modified-Since' => $opts['ifModifiedSince']
@@ -810,6 +862,7 @@ class ChangesApi
             throw new \InvalidArgumentException("Missing the required parameter 'sharedId' when calling getSharedLink");
         }
 
+        $opts = array_merge(['include'=> [], 'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'sharedId' => $sharedId
@@ -848,12 +901,14 @@ class ChangesApi
             throw new \InvalidArgumentException("Missing the required parameter 'sharedId' when calling getSharedLinkContent");
         }
 
+        $opts = array_merge(['attachment'=> true,
+                             'ifModifiedSince' => ''], $opts);
         $postBody = null;
         $pathParams = [
             'sharedId' => $sharedId
         ];
         $queryParams = [
-            'attachment' => isset($opts['attachment'])?$opts['attachment']:true
+            'attachment' => $opts['attachment']
         ];
         $headerParams = [
             'If-Modified-Since' => $opts['ifModifiedSince']
@@ -891,13 +946,15 @@ class ChangesApi
             throw new \InvalidArgumentException("Missing the required parameter 'renditionId' when calling getSharedLinkRenditionContent");
         }
 
+        $opts = array_merge(['attachment'=> true,
+                             'ifModifiedSince' => ''], $opts);
         $postBody = null;
         $pathParams = [
             'sharedId' => $sharedId,
             'renditionId' => $renditionId
         ];
         $queryParams = [
-            'attachment' => isset($opts['attachment'])?$opts['attachment']:true
+            'attachment' => $opts['attachment']
         ];
         $headerParams = [
             'If-Modified-Since' => $opts['ifModifiedSince']
@@ -964,13 +1021,16 @@ class ChangesApi
         if (empty($childId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'childId' when calling listParents");
         }
+        $opts = array_merge(['where'=> '',
+                             'fields' => [],
+                             'include' => []], $opts);
         $postBody = null;
         $pathParams = [
             'childId' => $childId,
         ];
         $queryParams = [
-            'where'         => $opts['where'] ?: '',
-            'include'       => $opts['include'] ?: '',
+            'where'         => $opts['where'],
+            'include'       => $opts['include'],
             'fields'        => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
         ];
         $headerParams = [];
@@ -1002,14 +1062,18 @@ class ChangesApi
         if (empty($parentId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'parentId' when calling listSecondaryChildAssociations");
         }
+        $opts = array_merge(['where'=> '',
+                             'assocType' => '',
+                             'fields' => [],
+                             'include' => []], $opts);
         $postBody = null;
         $pathParams = [
             'parentId' => $parentId,
         ];
         $queryParams = [
-            'assocType'     => $opts['assocType'] ?: '',
-            'where'         => $opts['where'] ?: '',
-            'include'       => $opts['include'] ?: '',
+            'assocType'     => $opts['assocType'],
+            'where'         => $opts['where'],
+            'include'       => $opts['include'],
             'fields'        => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
         ];
         $headerParams = [];
@@ -1041,13 +1105,16 @@ class ChangesApi
         if (empty($targetId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'targetId' when calling listSourceNodeAssociations");
         }
+        $opts = array_merge(['where'=> '',
+                             'fields' => [],
+                             'include' => []], $opts);
         $postBody = null;
         $pathParams = [
             'targetId' => $targetId,
         ];
         $queryParams = [
-            'where' => $opts['where'] ?: '',
-            'include'    => $opts['include'] ?: '',
+            'where' => $opts['where'],
+            'include'    => $opts['include'],
             'fields'     => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
         ];
         $headerParams = [];
@@ -1080,13 +1147,16 @@ class ChangesApi
             throw new \InvalidArgumentException("Missing the required parameter 'sourceId' when calling listTargetAssociations");
         }
 
+        $opts = array_merge(['where'=> '',
+                             'fields' => [],
+                             'include' => []], $opts);
         $postBody = null;
         $pathParams = [
             'sourceId' => $sourceId,
         ];
         $queryParams = [
-            'where' => $opts['where'] ?: '',
-            'include'    => $opts['include'] ?: '',
+            'where' => $opts['where'],
+            'include'    => $opts['include'],
             'fields'     => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
         ];
         $headerParams = [];
@@ -1119,15 +1189,21 @@ class ChangesApi
             throw new \InvalidArgumentException("Missing the required parameter 'term' when calling liveSearchNodes");
         }
 
+        $opts = array_merge(['skipCount'=> 0,
+                             'maxItems' => 100,
+                             'rootNodeId' => '',
+                             'nodeType' => '',
+                             'orderBy' => 'ASC',
+                             'include' => []], $opts);
         $postBody = null;
         $pathParams = [];
         $queryParams = [
-            'skipCount'     => $opts['skipCount'] ?: 0,
-            'maxItems'      => $opts['maxItems'] ?: 100,
+            'skipCount'     => $opts['skipCount'],
+            'maxItems'      => $opts['maxItems'],
             'term'          => $term,
             'rootNodeId'    => $opts['rootNodeId'],
             'nodeType'      => $opts['nodeType'],
-            'orderBy'       => $opts['orderBy'] ?: 'ASC',
+            'orderBy'       => $opts['orderBy'],
             'fields'        => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
         ];
         $headerParams = [];
@@ -1164,6 +1240,7 @@ class ChangesApi
             throw new \InvalidArgumentException("Missing the required parameter 'targetId' when calling removeAssoc");
         }
 
+        $opts = array_merge(['assocType'=> ''], $opts);
         $postBody = null;
         $pathParams = [
             'sourceId' => $sourceId,
@@ -1205,6 +1282,7 @@ class ChangesApi
         if (empty($childId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'childId' when calling removeSecondaryChildAssoc");
         }
+        $opts = array_merge(['assocType'=> ''], $opts);
         $postBody = null;
         $pathParams = [
             'parentId' => $parentId,
@@ -1283,13 +1361,17 @@ class ChangesApi
             throw new \InvalidArgumentException("Missing the required parameter 'contentBody' when calling updateFileContent");
         }
 
+        $opts = array_merge(['majorVersion' => false,
+                             'comment' => '',
+                             'fields' => [],
+                             'include' => []], $opts);
         $postBody = $contentBody;
         $pathParams = [
             'nodeId' => $nodeId,
         ];
         $queryParams = [
             'majorVersion' => $opts['majorVersion'],
-            'comment'      => $opts['comment'] ?: '',
+            'comment'      => $opts['comment'],
             'include'      => $this->apiClient->buildCollectionParam($opts['include'], 'csv'),
             'fields'       => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
         ];
@@ -1328,6 +1410,8 @@ class ChangesApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeBody' when calling updateNode");
         }
 
+        $opts = array_merge(['fields' => [],
+                             'include' => []], $opts);
         $postBody = $nodeBody;
         $pathParams = [
             'nodeId' => $nodeId,

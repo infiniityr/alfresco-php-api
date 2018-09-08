@@ -44,14 +44,21 @@ class QueriesApi
             throw new \InvalidArgumentException("Missing the required parameter 'term' when calling findNodes");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'rootNodeId' => '',
+                             'nodeType' => '',
+                             'orderBy' => [],
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [];
         $queryParams = [
             'term' => $term,
-            'rootNodeId' => $opts['rootNodeId']?:'',
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
-            'nodeType' => $opts['nodeType']?:'',
+            'rootNodeId' => $opts['rootNodeId'],
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
+            'nodeType' => $opts['nodeType'],
             'include' => $this->apiClient->buildCollectionParam($opts['include'], 'csv'),
             'orderBy' => $this->apiClient->buildCollectionParam($opts['orderBy'], 'csv'),
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
@@ -85,12 +92,16 @@ class QueriesApi
             throw new \InvalidArgumentException("Missing the required parameter 'term' when calling findPeople");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'orderBy' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [];
         $queryParams = [
             'term' => $term,
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
             'orderBy' => $this->apiClient->buildCollectionParam($opts['orderBy'], 'csv'),
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
         ];
@@ -123,12 +134,16 @@ class QueriesApi
             throw new \InvalidArgumentException("Missing the required parameter 'term' when calling findSites");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'orderBy' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [];
         $queryParams = [
             'term' => $term,
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100,
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems'],
             'orderBy' => $this->apiClient->buildCollectionParam($opts['orderBy'], 'csv'),
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv')
         ];

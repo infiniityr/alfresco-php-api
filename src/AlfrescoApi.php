@@ -152,12 +152,12 @@ class AlfrescoApi
     }
 
     public function initObjects() {
-        $this->stores['activiti'] = new AlfrescoActivitiRestApi();
-        $this->stores['core'] = new AlfrescoCoreRestApi();
-        $this->stores['search'] = new AlfrescoSearchRestApi();
-        $this->stores['discovery'] = new AlfrescoDiscoveryRestApi();
-        $this->stores['gsCore'] = new AlfrescoGsCoreRestApi();
-        $this->stores['gsClassification'] = new AlfrescoGsClassificationRestApi();
+        $this->stores['activiti'] = new AlfrescoActivitiRestApi($this->bpmClient);
+        $this->stores['core'] = new AlfrescoCoreRestApi($this->ecmClient);
+        $this->stores['search'] = new AlfrescoSearchRestApi($this->searchClient);
+        $this->stores['discovery'] = new AlfrescoDiscoveryRestApi($this->discoveryClient);
+        $this->stores['gsCore'] = new AlfrescoGsCoreRestApi($this->gsClient);
+        $this->stores['gsClassification'] = new AlfrescoGsClassificationRestApi($this->gsClient);
         $this->stores['nodes'] = $this->stores['node'] = new AlfrescoNode();
         $this->stores['content'] = new AlfrescoContent($this->ecmAuth, $this->ecmClient);
         $this->stores['upload'] = new AlfrescoUpload();
@@ -187,22 +187,26 @@ class AlfrescoApi
             return $this->bpmAuth->login($username, $password)
                 ->then(function($ticketBpm) {
                     $this->config['ticketBpm'] = $ticketBpm;
+                    $this->bpmClient->setAuthentications($this->bpmAuth->getAuthentication());
                 }, function(RequestException $exception) { throw $exception; });
         } elseif ($this->isEcmConfiguration()) {
             return $this->ecmAuth->login($username, $password)
                 ->then(function($ticketEcm) {
                     $this->config['ticketEcm'] = $ticketEcm;
+                    $this->ecmClient->setAuthentications($this->ecmAuth->getAuthentication());
                 }, function(RequestException $exception) { throw $exception; });
         } elseif ($this->isEcmBpmConfiguration()) {
             return $this->loginBpmEcm($username, $password)
                 ->then(function($tickets) {
                     $this->config['ticketEcm'] = $tickets[0];
                     $this->config['ticketBpm'] = $tickets[1];
+                    $this->setAuthenticationClientECMBPM($this->ecmAuth->getAuthentication(), $this->bpmAuth->getAuthentication());
                 }, function(RequestException $exception) { throw $exception; });
         } elseif ($this->isOauthConfiguration()) {
             return $this->oauthAuth->login($username, $password)
                 ->then(function($accessToken) {
                     $this->config['accessToken'] = $accessToken;
+                    $this->setAuthenticationClientECMBPM($this->oauthAuth->getAuthentication(), $this->oauthAuth->getAuthentication());
                 }, function(RequestException $exception) { throw $exception; });
         }
     }

@@ -89,6 +89,7 @@ class FavoritesApi
             throw new \InvalidArgumentException("Missing the required parameter 'favoriteId' when calling getFavorite");
         }
 
+        $opts = array_merge(['fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId'   => $personId,
@@ -127,14 +128,19 @@ class FavoritesApi
             throw new \InvalidArgumentException("Missing the required parameter 'personId' when calling getFavorites");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'where' => '',
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'personId' => $personId,
         ];
         $queryParams = [
-            'skipCount' => $opts['skipCount'] ?: 0,
-            'maxItems'  => $opts['maxItems'] ?: 100,
-            'where'     => $opts['where'] ?: '',
+            'skipCount' => $opts['skipCount'],
+            'maxItems'  => $opts['maxItems'],
+            'where'     => $opts['where'],
             'fields'    => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
             'include'   => $this->apiClient->buildCollectionParam($opts['include'], 'csv'),
         ];

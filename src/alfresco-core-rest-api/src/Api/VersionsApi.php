@@ -129,17 +129,20 @@ class VersionsApi
             throw new \InvalidArgumentException("Missing the required parameter 'versionId' when calling getVersionContent");
         }
 
+        $opts = array_merge(['attachment' => [],
+                             'ifModifiedSince' => '',
+                             'range' => ''], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
             'versionId' => $versionId
         ];
         $queryParams = [
-            'attachment' => $this->apiClient->buildCollectionParam(key_exists('attachment', $opts)?$opts['attachment']:null, 'csv')
+            'attachment' => $this->apiClient->buildCollectionParam($opts['attachment'], 'csv')
         ];
         $headerParams = [
-            'If-Modified-Since' => key_exists('ifModifiedSince', $opts)?$opts['ifModifiedSince']:null,
-            'Range' => key_exists('range', $opts)?$opts['range']:null
+            'If-Modified-Since' => $opts['ifModifiedSince'],
+            'Range' => $opts['range']
         ];
         $formParams = [];
         $authNames = [];
@@ -173,6 +176,10 @@ class VersionsApi
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling listVersionHistory");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId
@@ -180,8 +187,8 @@ class VersionsApi
         $queryParams = [
             'include' => $this->apiClient->buildCollectionParam($opts['include'], 'csv'),
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
-            'skipCount' => $opts['skipCount']?:0,
-            'maxItems' => $opts['maxItems']?:100
+            'skipCount' => $opts['skipCount'],
+            'maxItems' => $opts['maxItems']
         ];
         $headerParams = [];
         $formParams = [];
@@ -222,6 +229,7 @@ class VersionsApi
             throw new \InvalidArgumentException("Missing the required parameter 'revertBody' when calling revertVersion");
         }
 
+        $opts = array_merge(['fields' => []], $opts);
         $postBody = $revertBody;
         $pathParams = [
             'nodeId' => $nodeId,

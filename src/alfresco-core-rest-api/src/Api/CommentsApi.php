@@ -48,6 +48,7 @@ class CommentsApi
         if (empty($commentBody)) {
             throw new \InvalidArgumentException("Missing the required parameter 'commentBody' when calling addComment");
         }
+        $opts = array_merge(['fields' => []], $opts);
         $postBody = $commentBody;
         $pathParams = [
             'nodeId' => $nodeId,
@@ -84,13 +85,16 @@ class CommentsApi
         if (empty($nodeId)) {
             throw new \InvalidArgumentException("Missing the required parameter 'nodeId' when calling getComments");
         }
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'nodeId' => $nodeId,
         ];
         $queryParams = [
-            'skipCount' => opts['skipCount'],
-            'maxItems'  => opts['maxItems'],
+            'skipCount' => $opts['skipCount'],
+            'maxItems'  => $opts['maxItems'],
             'fields'    => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
         ];
         $headerParams = [];
@@ -167,6 +171,7 @@ class CommentsApi
         if (empty($commentBody)) {
             throw new \InvalidArgumentException("Missing the required parameter 'commentBody' when calling updateComment");
         }
+        $opts = array_merge(['fields' => []], $opts);
         $postBody = $commentBody;
         $pathParams = [
             'nodeId' => $nodeId,

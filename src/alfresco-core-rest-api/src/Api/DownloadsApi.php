@@ -83,6 +83,7 @@ class DownloadsApi
         }
 
         $postBody = $downloadBodyCreate;
+        $opts = array_merge(['fields' => []], $opts);
         $pathParams = [];
         $queryParams = [
             'fields' => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),

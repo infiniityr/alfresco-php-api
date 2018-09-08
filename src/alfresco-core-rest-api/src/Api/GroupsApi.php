@@ -49,6 +49,8 @@ class GroupsApi
             throw new \InvalidArgumentException("Missing the required parameter 'groupBody' when calling createGroup");
         }
 
+        $opts = array_merge(['include' => [],
+                             'fields' => []], $opts);
         $postBody = $groupBody;
         $pathParams = [];
         $queryParams = [
@@ -80,13 +82,19 @@ class GroupsApi
      */
     public function getGroups(array $opts = [])
     {
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'orderBy' => '',
+                             'where' => '',
+                             'include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [];
         $queryParams = [
-            'skipCount' => $opts['skipCount'] ?: 0,
-            'maxItems'  => $opts['maxItems'] ?: 100,
-            'orderBy'   => $opts['orderBy'] ?: '',
-            'where'     => $opts['where'] ?: '',
+            'skipCount' => $opts['skipCount'],
+            'maxItems'  => $opts['maxItems'],
+            'orderBy'   => $opts['orderBy'],
+            'where'     => $opts['where'],
             'fields'    => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
             'include'   => $this->apiClient->buildCollectionParam($opts['include'], 'csv'),
         ];
@@ -120,6 +128,7 @@ class GroupsApi
             throw new \InvalidArgumentException("Missing the required parameter 'groupId' when calling deleteGroup");
         }
 
+        $opts = array_merge(['cascade' => false], $opts);
         $postBody = null;
         $pathParams = [
             'groupId' => $groupId,
@@ -157,6 +166,8 @@ class GroupsApi
             throw new \InvalidArgumentException("Missing the required parameter 'groupId' when calling getGroup");
         }
 
+        $opts = array_merge(['include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'groupId' => $groupId,
@@ -202,6 +213,8 @@ class GroupsApi
             throw new \InvalidArgumentException("Id change not allowed in 'groupBody' when calling updateGroup");
         }
 
+        $opts = array_merge(['include' => [],
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'groupId' => $groupId,
@@ -240,15 +253,20 @@ class GroupsApi
             throw new \InvalidArgumentException("Missing the required parameter 'groupId' when calling getGroupMembers");
         }
 
+        $opts = array_merge(['skipCount' => 0,
+                             'maxItems' => 100,
+                             'orderBy' => '',
+                             'where' => '',
+                             'fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'groupId' => $groupId,
         ];
         $queryParams = [
-            'skipCount' => $opts['skipCount'] ?: 0,
-            'maxItems'  => $opts['maxItems'] ?: 100,
-            'orderBy'   => $opts['orderBy'] ?: '',
-            'where'     => $opts['where'] ?: '',
+            'skipCount' => $opts['skipCount'],
+            'maxItems'  => $opts['maxItems'],
+            'orderBy'   => $opts['orderBy'],
+            'where'     => $opts['where'],
             'fields'    => $this->apiClient->buildCollectionParam($opts['fields'], 'csv'),
         ];
         $headerParams = [];
@@ -285,6 +303,7 @@ class GroupsApi
             throw new \InvalidArgumentException("Missing the required parameter 'groupMemberBody' when calling addGroupMember");
         }
 
+        $opts = array_merge(['fields' => []], $opts);
         $postBody = null;
         $pathParams = [
             'groupId' => $groupId,
