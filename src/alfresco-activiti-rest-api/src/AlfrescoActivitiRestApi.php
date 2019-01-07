@@ -14,13 +14,19 @@ use AlfPHPApi\AlfrescoActivitiRestApi\Api\AdminEndpointsApi;
 use AlfPHPApi\AlfrescoActivitiRestApi\Api\AdminGroupsApi;
 use AlfPHPApi\AlfrescoActivitiRestApi\Api\AdminTenantApi;
 use AlfPHPApi\AlfrescoActivitiRestApi\Api\AdminUsersApi;
+use AlfPHPApi\AlfrescoActivitiRestApi\Api\AlfrescoApi;
+use AlfPHPApi\AlfrescoActivitiRestApi\Api\AppsApi;
+use AlfPHPApi\AlfrescoActivitiRestApi\Api\CommentsApi;
 use AlfPHPApi\AlfrescoActivitiRestApi\Model\AddGroupCapabilitiesRepresentation;
+use AlfPHPApi\AlfrescoActivitiRestApi\Model\AppDefinitionPublishRepresentation;
 use AlfPHPApi\AlfrescoActivitiRestApi\Model\BulkUserUpdateRepresentation;
+use AlfPHPApi\AlfrescoActivitiRestApi\Model\CommentRepresentation;
 use AlfPHPApi\AlfrescoActivitiRestApi\Model\CreateEndpointBasicAuthRepresentation;
 use AlfPHPApi\AlfrescoActivitiRestApi\Model\CreateTenantRepresentation;
 use AlfPHPApi\AlfrescoActivitiRestApi\Model\EndpointConfigurationRepresentation;
 use AlfPHPApi\AlfrescoActivitiRestApi\Model\File;
 use AlfPHPApi\AlfrescoActivitiRestApi\Model\GroupRepresentation;
+use AlfPHPApi\AlfrescoActivitiRestApi\Model\RuntimeAppDefinitionSaveRepresentation;
 use AlfPHPApi\AlfrescoActivitiRestApi\Model\UserRepresentation;
 use AlfPHPApi\BaseListApi;
 
@@ -38,6 +44,12 @@ use AlfPHPApi\BaseListApi;
  * @property-read AdminTenantApi $adminTenant
  * @property-read AdminUsersApi $adminUsersApi
  * @property-read AdminUsersApi $adminUsers
+ * @property-read AlfrescoApi $alfrescoApi
+ * @property-read AlfrescoApi $alfresco
+ * @property-read AppsApi $appsApi
+ * @property-read AppsApi $apps
+ * @property-read CommentsApi $commentsApi
+ * @property-read CommentsApi $comments
  *
  * METHODS
  * AboutAPI
@@ -89,6 +101,29 @@ use AlfPHPApi\BaseListApi;
  * @method \GuzzleHttp\Promise\PromiseInterface createNewUser(UserRepresentation $userRepresentation)
  * @method \GuzzleHttp\Promise\PromiseInterface getUser(int $userId, array $opts = [])
  * @method \GuzzleHttp\Promise\PromiseInterface getUsers(array $opts = [])
+ *
+ * AlfrescoApi
+ * @method \GuzzleHttp\Promise\PromiseInterface confirmAuthorisation(string $code)
+ * @method \GuzzleHttp\Promise\PromiseInterface getAllNetworks()
+ * @method \GuzzleHttp\Promise\PromiseInterface getAllSites(string $id)
+ * @method \GuzzleHttp\Promise\PromiseInterface getContentInFolder(string $id, string $folderId)
+ * @method \GuzzleHttp\Promise\PromiseInterface getContentInSite(string $id, string $siteId)
+ * @method \GuzzleHttp\Promise\PromiseInterface getRepositories(array $opts = [])
+ *
+ * AppsApi
+ * @method \GuzzleHttp\Promise\PromiseInterface deployAppDefinitions(RuntimeAppDefinitionSaveRepresentation $saveObject)
+ * @method \GuzzleHttp\Promise\PromiseInterface exportAppDefinition(int $modelId)
+ * @method \GuzzleHttp\Promise\PromiseInterface getAppDefinitions()
+ * @method \GuzzleHttp\Promise\PromiseInterface importAppDefinition(File $file, int $modelId = null)
+ * @method \GuzzleHttp\Promise\PromiseInterface publishAppDefinition(int $modelId, AppDefinitionPublishRepresentation $publishModel)
+ *
+ * CommentsApi
+ * @method \GuzzleHttp\Promise\PromiseInterface addProcessInstanceComment(CommentRepresentation $commentRequest, string $processInstanceId)
+ * @method \GuzzleHttp\Promise\PromiseInterface addTaskComment(CommentRepresentation $commentRequest, string $taskId)
+ * @method \GuzzleHttp\Promise\PromiseInterface getProcessInstanceComments(string $processInstanceId, array $opts = null)
+ * @method \GuzzleHttp\Promise\PromiseInterface getTaskComments(string $taskId, array $opts = null)
+ *
+ *
  */
 class AlfrescoActivitiRestApi extends BaseListApi
 {
@@ -98,6 +133,7 @@ class AlfrescoActivitiRestApi extends BaseListApi
         AdminGroupsApi::class,
         AdminTenantApi::class,
         AdminUsersApi::class,
-        
+        AlfrescoApi::class,
+
     ];
 }

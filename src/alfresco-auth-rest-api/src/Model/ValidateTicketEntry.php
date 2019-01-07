@@ -9,6 +9,8 @@
 namespace AlfPHPApi\AlfrescoAuthRestApi\Model;
 
 
+use AlfPHPApi\AlfrescoCoreRestApi\Model\Model;
+
 class ValidateTicketEntry extends Model
 {
     /**

@@ -9,6 +9,8 @@
 namespace AlfPHPApi\AlfrescoDiscoveryRestApi\Model;
 
 
+use AlfPHPApi\AlfrescoCoreRestApi\Model\Model;
+
 class ErrorError extends Model
 {
     /**

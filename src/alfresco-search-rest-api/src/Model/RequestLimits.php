@@ -9,6 +9,8 @@
 namespace AlfPHPApi\AlfrescoSearchRestApi\Model;
 
 
+use AlfPHPApi\AlfrescoCoreRestApi\Model\Model;
+
 class RequestLimits extends Model
 {
     /**

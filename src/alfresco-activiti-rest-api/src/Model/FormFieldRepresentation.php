@@ -9,7 +9,7 @@
 namespace AlfPHPApi\AlfrescoActivitiRestApi\Model;
 
 
-use phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen;
+use AlfPHPApi\AlfrescoCoreRestApi\Model\Model;
 
 class FormFieldRepresentation extends Model
 {

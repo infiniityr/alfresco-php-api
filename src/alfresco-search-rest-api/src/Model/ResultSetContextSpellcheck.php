@@ -9,6 +9,8 @@
 namespace AlfPHPApi\AlfrescoSearchRestApi\Model;
 
 
+use AlfPHPApi\AlfrescoCoreRestApi\Model\Model;
+
 class ResultSetContextSpellcheck extends Model
 {
     /**
@@ -26,9 +28,9 @@ class ResultSetContextSpellcheck extends Model
         'suggestion' => ['String']
     ];
 }
-
+/*
 class TypeEnum {
     const searchInsteadFor = "searchInsteadFor";
 
     const didYouMean = "didYouMean";
-}
+}*/

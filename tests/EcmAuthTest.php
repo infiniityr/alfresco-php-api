@@ -6,6 +6,8 @@
  * Time: 14:56
  */
 
+namespace AlfPHPApi\Tests;
+
 class EcmAuthTest extends \PHPUnit\Framework\TestCase
 {
     private $hostEcm;

@@ -11,6 +11,9 @@ use AlfPHPApi\AlfrescoCoreRestApi\ApiClient;
 
 class Model implements \JsonSerializable
 {
+    /**
+     * @var array
+     */
     protected static $constructProperties;
 
     /**
@@ -33,14 +36,46 @@ class Model implements \JsonSerializable
         return $obj;
     }
 
+    /**
+     * @return array|mixed
+     */
     public function jsonSerialize()
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * @param bool $recursive
+     *
+     * @return array
+     */
+    public function toArray($recursive = false)
     {
         $arrayObj = [];
         foreach (static::$constructProperties as $property => $type) {
             if (!empty($this->$property)) {
-                $arrayObj[$property] = $this->$property;
+                if ($type === "Date") {
+                    $arrayObj[$property] = $this->$property->format(\DateTime::ISO8601);
+                } else if ($recursive) {
+                    if (is_object($this->$property) and method_exists($this->$property, "toArray")) {
+                        $arrayObj[$property] = $this->$property->toArray($recursive);
+                    } else if (is_array($this->$property)) {
+                        $arrayObj[$property] = json_decode(json_encode($this->$property), true);
+                    } else {
+                        $arrayObj[$property] = $this->$property;
+                    }
+                } else {
+                    $arrayObj[$property] = $this->$property;
+                }
             }
         }
         return $arrayObj;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getConstructProperties() {
+        return static::$constructProperties;
     }
 }

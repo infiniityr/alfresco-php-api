@@ -2,6 +2,7 @@
 /**
  * Class get from http://php.net/manual/fr/function.session-start.php
  * made by : linblow@hotmail.fr
+ * updated by : valentin.lecompte@gmail.com
  */
 
 namespace AlfPHPApi;

@@ -10,6 +10,7 @@ namespace AlfPHPApi\AlfrescoSearchRestApi\Model;
 
 
 use AlfPHPApi\AlfrescoCoreRestApi\ApiClient;
+use AlfPHPApi\AlfrescoCoreRestApi\Model\Model;
 
 class RequestFields extends Model
 {

@@ -1,9 +1,14 @@
 <?php
 
+namespace AlfPHPApi\Tests\AlfrescoCoreRestApi;
+
 use \PHPUnit\Framework\TestCase;
 use AlfPHPApi\AlfrescoCoreRestApi\ApiClient;
 use \GuzzleHttp\Psr7\Request;
 
+/**
+ * Class ApiClientTest
+ */
 class ApiClientTest extends TestCase
 {
     /**
@@ -23,6 +28,9 @@ class ApiClientTest extends TestCase
         parent::setUp();
     }
 
+    /**
+     * @group testApi
+     */
     public function testGetSites()
     {
         $this->alfrescoApi->core->getSites()
@@ -33,6 +41,9 @@ class ApiClientTest extends TestCase
             })->wait();
     }
 
+    /**
+     * @group testApi
+     */
     public function testCreateSite()
     {
         $siteBody = new \AlfPHPApi\AlfrescoCoreRestApi\Model\SiteBody("Site Test PHP");
@@ -44,6 +55,9 @@ class ApiClientTest extends TestCase
         })->wait();
     }
 
+    /**
+     * @group testApi
+     */
     public function testDeleteSite()
     {
         $this->alfrescoApi->core->deleteSite(self::$SITE_ID, ['permanent' => true])

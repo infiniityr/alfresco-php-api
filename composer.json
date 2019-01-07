@@ -26,8 +26,21 @@
             "AlfPHPApi\\AlfrescoSearchRestApi\\": "src/alfresco-search-rest-api/src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "AlfPHPApi\\Tests\\": "tests/",
+            "AlfPHPApi\\Tests\\AlfrescoCoreRestApi\\": "tests/alfresco-core-rest-api/",
+            "AlfPHPApi\\Tests\\AlfrescoDiscoveryRestApi\\": "tests/alfresco-discovery-rest-api/",
+            "AlfPHPApi\\Tests\\AlfrescoSearchRestApi\\": "tests/alfresco-search-rest-api/"
+        }
+    },
     "require-dev": {
         "phpunit/phpunit": "^7",
         "codedungeon/phpunit-result-printer": "^0.16.1"
+    },
+    "scripts": {
+        "test": "phpunit --exclude-group testApi",
+        "test-all": "phpunit",
+        "coverage": "phpdbg -qrr ./vendor/bin/phpunit"
     }
 }

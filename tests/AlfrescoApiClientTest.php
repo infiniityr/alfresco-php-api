@@ -1,5 +1,7 @@
 <?php
 
+namespace AlfPHPApi\Tests;
+
 use \PHPUnit\Framework\TestCase;
 
 class AlfrescoApiClientTest extends TestCase {
@@ -14,7 +16,7 @@ class AlfrescoApiClientTest extends TestCase {
 
     public function testStringToDateTime() {
         $date = '2015-11-17T03:33:17Z';
-        $this->assertEquals(new DateTime($date), \AlfPHPApi\AlfrescoApiClient::convertToType($date, 'Date'));
+        $this->assertEquals(new \DateTime($date), \AlfPHPApi\AlfrescoApiClient::convertToType($date, 'Date'));
     }
 
     public function testNullDateToNull() {

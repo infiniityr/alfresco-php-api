@@ -9,6 +9,8 @@
 namespace AlfPHPApi\AlfrescoActivitiRestApi\Model;
 
 
+use AlfPHPApi\AlfrescoCoreRestApi\Model\Model;
+
 class AppModelDefinition extends Model
 {
     /**

@@ -6,6 +6,8 @@
  * Time: 14:15
  */
 
+namespace AlfPHPApi\Tests;
+
 use \PHPUnit\Framework\TestCase;
 
 class AlfrescoApiTest extends TestCase
